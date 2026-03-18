@@ -1,0 +1,40 @@
+caracter TI
+entero TA, K
+real GA, P
+
+inicio 
+	
+	escriba "Ingrese el tamaño de la uva : "
+	lea TA
+	
+	escriba "Ingrese el tipo de uva : "
+	lea TI
+	
+	escriba "Ingrese la producción de uvas : "
+	lea K
+	
+	P <- 80000
+	
+	si (TI = 'A') y (TI = '1')
+		entonces GA <- (P * K) + 20000
+		escriba "La ganacia obtenida es de : ", GA
+	sino 
+		si (TI = 'A') y (TI = '2')
+	 	entonces GA <- (P * K) + 30000
+	 	escriba "La ganacia obtenida es de : ", GA
+		fin si
+	fin si
+	
+	si (TI = 'B') y (TI = '1')
+		entonces GA <- (P * K) + 20000
+		escriba "La ganacia obtenida es de : ", GA
+	sino 
+		si (TI = 'B') y (TI = '2')
+	 	entonces GA <- (P * K) + 30000
+	 	escriba "La ganacia obtenida es de : ", GA
+		fin si
+	fin si
+	
+	
+	
+fin 

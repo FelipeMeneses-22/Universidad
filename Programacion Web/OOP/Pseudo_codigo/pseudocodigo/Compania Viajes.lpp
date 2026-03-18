@@ -1,0 +1,35 @@
+caracter TA
+entero KM
+real NP, CK, CP, TO, NPR
+
+inicio
+	escriba "Ingrese un tipo de autobus : A - B - C : "
+	lea TA
+	
+	escriba "Ingrese Kilometros por recorrer : "
+	lea KM
+	
+	escriba "Ingrese numero de personas : "
+	lea NPR
+	
+	si TA = 'A' entonces
+		CK <- NPR * 20000
+	sino
+		si TA = 'B' entonces
+			CK <- NPR * 25000
+		sino 
+			CK <- NPR * 30000
+		fin si
+	fin si
+
+	si  NPR <= 20 entonces 
+		TO <- CK * NPR
+		CP <- CK  / NPR
+		escriba "El total a pagar por ",KM," de vieje es : ", TO
+		llamar nueva_linea
+		escriba "El total a pagar por ",NPR," de personas es de : ", CP
+	fin si
+fin
+		
+		
+		

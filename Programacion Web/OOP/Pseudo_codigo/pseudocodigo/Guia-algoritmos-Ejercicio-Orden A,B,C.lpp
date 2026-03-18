@@ -1,0 +1,35 @@
+entero  A, B, C
+
+inicio 
+	
+	escriba "ingrese : "
+	lea A
+	
+	escriba "ingrese : "
+	lea B
+	
+	escriba "ingrese : "
+	lea C
+	
+	si A > B entonces 
+		si A > C entonces 
+			si B > C entonces
+				escriba " El orden es de : ", A, " ", B, " ", C
+			sino escriba " El orden es de : ", A, " ", C, " ", B 
+			fin si
+		sino 
+			escriba " El orden es de : ", C, " ", A, " ", B
+		fin si
+	
+	sino 
+		si B > C entonces 
+			si A > C entonces 
+				escriba " El orden es de : ", B, " ", A, " ", C
+			sino 
+				escriba " El orden es de : ", B, " ", C, " ", A
+			fin si
+		sino escriba " El orden es de : ", C, " ", B, " ", A
+		fin si
+	fin si
+	
+fin 

@@ -1,0 +1,59 @@
+// 3.El presidente de la república ha decidido estimular a todos los estudiantes de una universidad mediante la asignación de becas mensuales
+// ,para esto se tomarán en consideración los siguientes criterios:
+// Para alumnos mayores de 18 años con promedio mayor o igual a 9, la beca será de $2.000.000;
+// con promedio mayor o igual a 7.5, de $1.000.000;
+// para los promedios menores de 7.5 pero mayores o iguales a 6.0, de $500.000;
+// a los demás se les enviará una carta de invitación incitándolos a que estudien más en el próximo ciclo escolar.
+
+entero edad
+real promedio, beca1, beca2, beca3, beca4
+caracter cont
+cadena [25]nombre
+
+inicio
+
+promedio <- 0
+
+
+
+
+
+	repita 
+		llamar nueva_linea
+		
+		escriba "Bienvenido futuro estudiante" 
+		llamar nueva_linea
+		escriba "Ingrese nombre : "
+		lea nombre
+		escriba "Ingrese su edad : "
+		lea edad
+		escriba "Ingrese su promedio : "
+		lea  promedio
+		
+		si edad >=18 entonces
+			si promedio >= 9 entonces
+				beca1 <- 2000000
+				escriba "¡¡Felicitacione!! Usted a ingresado con un promedio de ",promedio," por lo tanto el valor de la beca sera de $",beca1
+			sino 
+				si promedio >= 7.5 entonces
+					beca2 <- 1000000
+					escriba "¡¡Felicitacione!! Usted a ingresado con un promedio de ",promedio,", por lo tanto el valor de la beca sera de $",beca2
+				sino
+					si promedio >= 6.0 entonces
+						beca3 <- 500000
+						escriba "¡¡Felicitacione!! Usted a ingresado con un promedio de ",promedio,", por lo tanto el valor de la beca sera de $",beca3
+					sino
+						escriba "Se les enviara una carta de invitacion incitandolos a que estudien mas en el proximo ciclo escolar."
+					fin si
+				fin si
+			fin si
+		sino
+			escriba "Usted es menor de edad para ingresar a una beca"
+		fin si
+		llamar nueva_linea
+		llamar nueva_linea
+		escriba "Desea continuar ? s / n : "
+		lea cont
+		
+	hasta (cont = 'n') o (cont = 'N')
+fin

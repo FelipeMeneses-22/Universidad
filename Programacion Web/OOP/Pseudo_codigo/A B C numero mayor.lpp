@@ -1,0 +1,34 @@
+entero A,  B, C
+
+inicio
+	escriba "Ingrese numero  : "
+	lea A
+	
+	escriba "Ingrese numero  : "
+	lea B
+	
+	escriba "Ingrese numero  : "
+	lea C
+	
+	si A > B entonces
+		si A > C entonces
+			si B  > C entonces 
+				escriba "El orden es : ", A," ",B," ", C 
+			sino 
+				escriba "El orden es :  ", A," ",C," ",B
+			fin si
+		sino 
+			escriba "El orden es :  ", C," ",A," ",B 
+		fin si
+	sino
+		si B > C entonces 
+			si A > C entonces
+				escriba "El orden es :  ", B," ",A," ",C
+			sino 
+				escriba "El orden es :  ", B," ",C," ",A
+			fin si
+		sino  
+			escriba "El orden es :  ",  C," ",B," ",A
+		fin si
+	fin si
+fin

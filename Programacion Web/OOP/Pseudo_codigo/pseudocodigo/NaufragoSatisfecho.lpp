@@ -1,0 +1,52 @@
+entero N,  TI, TP
+real PA, CA, TO, TOT
+
+inicio 
+	escriba "Ingrese el numero de hamburguesas : "
+	lea N
+	escriba "Ingrese el tipo de hamburguesa :"
+	llamar nueva_linea
+	escriba "1 = sencilla 20000"
+	llamar nueva_linea
+	escriba "2 = doble 25000"
+	llamar nueva_linea
+	escriba "3 triple 28000"
+	llamar nueva_linea
+	escriba "Que tipo de hamburguesa le gustaria pedir :  "
+	lea TI
+	
+	si TI = 1 entonces
+		TO <- N * 20000
+	sino
+		si TI = 2 entonces
+			TO <- N * 25000
+		sino
+			si TI = 3 entonces
+				TO <- N * 28000
+			fin si
+		fin si
+			  
+	fin si
+	
+	escriba "Ingrese el tipo de pago : "
+	llamar nueva_linea
+	escriba "1 = Efectivo "
+	llamar nueva_linea
+	escriba "2 = Tarjeta "
+	llamar nueva_linea
+	escriba " "
+	lea TP
+	
+	si TP = 1 entonces
+		escriba "El  total a pagar  por ",N," hamburguesas es de : ", TO
+		llamar nueva_linea
+	sino  
+		si TP = 2 entonces
+			TOT <- TO * 0.05
+			escriba "El total a pagar por ",N," hamburguesas con cargo es : ", TO + TOT
+			llamar nueva_linea
+			escriba "El cargo total es de : ", TOT
+		fin si
+	fin si
+fin
+		

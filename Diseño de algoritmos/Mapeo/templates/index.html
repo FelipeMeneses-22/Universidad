@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Libreria para conectar python con html -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2026.3.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2026.3.1/core.js"></script>
+    <title>Buscador de paises</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="text-center mt-5">Buscar País de Europa</h2>
+
+        <form method="POST">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="pais">Pais Europeo</label>
+                    <input type="text" class="form-control" name="pais" placeholder="Ingresa el nombre" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="tipo">Tipo de búsqueda</label>
+                    <select name="tipo" class="form-select">
+                        <option value="lineal">Búsqueda Lineal</option>
+                        <option value="binaria">Búsqueda Binaria</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-primary">
+                        Buscar
+                    </button>
+                </div>
+            </div>
+
+        </form>
+        {% if resultado %}
+        <div class="row">
+            <h3 class="text-center mt-5">Resultado</h3>
+            <div class="col-2 offset-md-4">
+                <p><b>Nombre:</b> {{resultado.nombre}}</p>
+            </div>
+            <div class="col-md-6 ">
+                <p>
+                    <a href="{{resultado.mapa}}" target="_blank">
+                        Ver en Google Maps
+                    </a>
+                </p>
+            </div>
+            {% elif resultado == None and request.method == "POST" %}
+            <p>No se encontró el país</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+// 1.	Una compañía de paquetería internacional tiene servicio en algunos países de América del Norte, América Central, América del Sur, Europa y Asia. El costo por el servicio de paquetería se basa en el peso del paquete y la zona a la que va dirigido.
+// Parte de su política de la empresa, implica que los paquetes con un peso superior a 500 kg no son transportados, esto por cuestiones de logística y de seguridad. 
+// Realice un algoritmo para determinar el cobro por la entrega de un paquete
+
+real costo,peso, total
+entero paquete 
+cadena [50]pais
+caracter cont
+
+inicio
+
+total <- 0
+costo <- 0
+peso <- 0
+
+	repita 
+		escriba "Ingrese el pais al que va dirigido el paquete : "
+		llamar nueva_linea
+		escriba " 1 = America del Norte"
+		llamar nueva_linea
+		escriba " 2 = America Central"
+		llamar nueva_linea
+		escriba " 3 = America Sur"
+		llamar nueva_linea
+		escriba " 4 = Europa"
+		llamar nueva_linea
+		escriba " 5 = Asia"
+		llamar nueva_linea
+		escriba "Eliga el destino del paquete : "
+		lea paquete
+		llamar nueva_linea
+		escriba "Ingrese el costo del servicio : "
+		lea costo
+		escriba "ingrese el peso del paquete : "
+		lea peso
+		
+		si peso <= 500 entonces 
+			total <- costo * peso
+			escriba " El costo es : ",total
+			llamar nueva_linea
+			escriba " El paquete se dirige para : ",paquete
+			llamar nueva_linea
+			escriba "El peso del paquete es ",peso," kilos."
+			llamar nueva_linea
+		sino
+			escriba "Nuestra compañia no ofrece servicio con un peso mayor a 500kg y el peso del paquete es ",peso,"."
+			llamar nueva_linea
+		fin si
+		escriba "Desea continuar enviando paquetes? s/n"
+		lea cont
+		llamar nueva_linea
+	
+	hasta (cont='n') o (cont='N')
+fin
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

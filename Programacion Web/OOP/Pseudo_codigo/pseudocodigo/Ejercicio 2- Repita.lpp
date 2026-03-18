@@ -1,0 +1,46 @@
+// 2. El dueño de un estacionamiento requiere un algoritmo
+// que le permita determinar cuánto debe cobrar por el uso del estacionamiento a sus clientes.
+// Las tarifas que se tienen son las siguientes:  
+// Las dos primeras horas a $5.000 c/u. 
+// Las siguientes tres a $4.000 c/u. 
+// Las cinco siguientes a $3.000 c/u. 
+// Después de diez horas el costo por cada una es de $2.000 c/u pesos.
+
+real tarifa, total
+entero hora
+caracter n
+
+inicio 
+
+tarifa <- 0
+total <- 0
+hora <- 0
+
+repita
+	escriba "Ingrese horas usadas:"
+	lea hora 
+	
+	si hora <= 2 entonces
+		tarifa <- hora * 5000
+		escriba "Las horas son ",hora," y el costo por hora es 5000 total es : ", tarifa
+	sino 
+		si hora <=5 entonces
+			tarifa <- hora * 4000
+			escriba "Las horas son ",hora," y el costo por hora es 4000 total es : ", tarifa
+		sino
+			si	hora <=10 entonces
+				tarifa <- hora * 3000
+				escriba "Las horas son ",hora," y el costo por hora es 3000 total es : ", tarifa
+			sino 
+				tarifa <- hora * 2000
+				escriba "Las horas son ",hora,", como supera las 10Hrs el costo por hora es 2000 : ", tarifa
+			fin si
+		fin si
+	fin si
+	llamar nueva_linea
+	escriba "Desea continuar ? s / n. "
+	lea n
+	
+hasta (n = 'n') o (n = 'N')
+
+fin
