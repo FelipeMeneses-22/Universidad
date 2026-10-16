@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Monitoreo de Redes ATM</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body>
+
+    <!-- ENCABEZADO -->
+    <header class="header">
+        <div class="header-content">
+            <div>
+                <h1>Monitoreo de Redes ATM</h1>
+                <p>
+                    Sistema de procesamiento de transacciones en tiempo real
+                </p>
+            </div>
+
+            <div class="header-date">
+                <span>Fecha actual</span>
+                <strong id="fechaActual">Cargando...</strong>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- INDICADORES GENERALES -->
+        <section class="dashboard-summary">
+
+            <article class="summary-card">
+                <h3>Transacciones enviadas</h3>
+                <p id="totalEnviadas">0</p>
+            </article>
+
+            <article class="summary-card">
+                <h3>Transacciones confirmadas</h3>
+                <p id="totalConfirmadas">0</p>
+            </article>
+
+            <article class="summary-card">
+                <h3>Errores de envío</h3>
+                <p id="totalErrores">0</p>
+            </article>
+
+            <article class="summary-card">
+                <h3>Total de alertas</h3>
+                <p id="totalAlertas">0</p>
+            </article>
+
+        </section>
+
+        <!-- NUEVO EVENTO -->
+        <section class="panel">
+
+            <div class="panel-header">
+                <h2>Nuevo evento</h2>
+                <p>Enviar transacciones a Kafka</p>
+            </div>
+
+            <form id="formTransaccion">
+
+                <!-- USUARIO MANUAL -->
+                <div class="form-group">
+                    <label for="usuario">Usuario</label>
+
+                    <input
+                        type="text"
+                        id="usuario"
+                        name="usuario"
+                        placeholder="Nombre del usuario"
+                        maxlength="100"
+                        required
+                    >
+                </div>
+
+                <!-- CAJERO -->
+                <div class="form-group">
+                    <label for="atm_id">Cajero automático</label>
+
+                    <select id="atm_id" name="atm_id" required>
+                        <option value="ATM-001">ATM-001</option>
+                        <option value="ATM-002">ATM-002</option>
+                        <option value="ATM-003">ATM-003</option>
+                        <option value="ATM-004">ATM-004</option>
+                        <option value="ATM-005">ATM-005</option>
+                    </select>
+                </div>
+
+                <!-- TIPO DE TRANSACCIÓN -->
+                <div class="form-group">
+                    <label for="transaction_type">
+                        Tipo de transacción
+                    </label>
+
+                    <select
+                        id="transaction_type"
+                        name="transaction_type"
+                        required
+                    >
+                        <option value="RETIRO">Retiro</option>
+                        <option value="DEPOSITO">Depósito</option>
+                        <option value="CONSULTA_SALDO">
+                            Consulta de saldo
+                        </option>
+                        <option value="TRANSFERENCIA">
+                            Transferencia
+                        </option>
+                    </select>
+                </div>
+
+                <!-- MONTO -->
+                <div class="form-group">
+                    <label for="amount">Monto (COP)</label>
+
+                    <input
+                        type="number"
+                        id="amount"
+                        name="amount"
+                        min="0"
+                        step="1"
+                        value="50000"
+                        required
+                    >
+
+                    <small id="ayudaMonto">
+                        Para consultas de saldo, el monto debe ser 0.
+                    </small>
+                </div>
+
+                <!-- ENVÍO MANUAL -->
+                <div class="form-actions">
+                    <button type="submit" id="btnEnviar">
+                        Enviar transacción manual
+                    </button>
+                </div>
+
+                <!-- SIMULADOR AUTOMÁTICO -->
+                <div class="automation-controls">
+
+                    <h3>Simulador automático</h3>
+
+                    <p>
+                        Genera transacciones aleatorias de los cinco cajeros
+                        y las envía continuamente a Kafka. Puedes identificar
+                        cada evento con el nombre del usuario que lo genera.
+                    </p>
+
+                    <!-- NOMBRE DEL USUARIO AUTOMÁTICO -->
+                    <div class="form-group">
+                        <label for="usuarioAutomatico">
+                            Usuario que genera los eventos
+                        </label>
+
+                        <input
+                            type="text"
+                            id="usuarioAutomatico"
+                            name="usuarioAutomatico"
+                            placeholder="Ejemplo: Pepito Pérez"
+                            maxlength="100"
+                            autocomplete="name"
+                            required
+                        >
+
+                        <small>
+                            Este nombre quedará asociado a las transacciones
+                            automáticas en el historial y en las alertas.
+                        </small>
+                    </div>
+
+                    <!-- BOTONES DE CONTROL -->
+                    <div class="automation-buttons">
+
+                        <button
+                            type="button"
+                            id="btnIniciarAutomatico"
+                        >
+                            ▶ Iniciar envío automático
+                        </button>
+
+                        <button
+                            type="button"
+                            id="btnDetenerAutomatico"
+                            disabled
+                        >
+                            ⏹ Detener envío automático
+                        </button>
+
+                    </div>
+
+                    <!-- ESTADO DEL SIMULADOR -->
+                    <p id="estadoAutomatico" role="status" aria-live="polite">
+                        Simulador detenido.
+                    </p>
+
+                </div>
+
+                <!-- MENSAJES -->
+                <div id="mensaje" role="status" aria-live="polite"></div>
+
+            </form>
+
+        </section>
+
+        <!-- ÚLTIMOS ENVÍOS -->
+        <section class="panel">
+
+            <div class="panel-header">
+                <h2>Últimos envíos (Local)</h2>
+                <p>Las 10 transacciones más recientes</p>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Cajero</th>
+                            <th>Tipo</th>
+                            <th>Monto</th>
+                            <th>Usuario</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tablaTransacciones">
+                        <tr>
+                            <td colspan="5">
+                                No hay transacciones recientes.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <!-- HISTORIAL DE MONGODB -->
+        <section class="panel">
+
+            <div class="panel-header">
+                <h2>Historial de transacciones</h2>
+                <p>Registros almacenados en MongoDB</p>
+            </div>
+
+            <p id="estadoHistorial" role="status">
+                Cargando historial...
+            </p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha de procesamiento</th>
+                            <th>ID de transacción</th>
+                            <th>Cajero</th>
+                            <th>Tipo</th>
+                            <th>Monto</th>
+                            <th>Usuario</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tablaHistorial">
+                        <tr>
+                            <td colspan="6">
+                                Cargando transacciones...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <!-- ALERTAS -->
+        <section class="panel">
+
+            <div class="panel-header">
+                <h2>Alertas de seguridad</h2>
+                <p>
+                    Transacciones que superan el límite configurado
+                    de $800.000 COP
+                </p>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha de detección</th>
+                            <th>ID de transacción</th>
+                            <th>Cajero</th>
+                            <th>Tipo</th>
+                            <th>Monto</th>
+                            <th>Motivo</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tablaAlertas">
+                        <tr>
+                            <td colspan="6">
+                                No hay alertas registradas.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="footer">
+        <p>
+            Sistema de Monitoreo ATM |
+            Kafka · Spark Structured Streaming · MongoDB · Flask
+        </p>
+    </footer>
+
+    <!-- JAVASCRIPT DEL DASHBOARD -->
+    <script
+        src="{{ url_for('static', filename='js/dashboard.js') }}"
+    ></script>
+
+</body>
+</html>
